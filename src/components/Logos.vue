@@ -1,3 +1,13 @@
+    <script setup lang="ts">
+    import {PROVIDE_DIALOG_VM} from '@/constant'
+    const provideDialogVm = inject(PROVIDE_DIALOG_VM,{exit:()=>{},confirm:()=>{}})
+    const cancel=()=>{
+      unref(provideDialogVm)?.exit()
+    }
+    const confirm=()=>{
+      unref(provideDialogVm)?.confirm()
+    }
+    </script>
 <template>
   <div>
     <a href="https://vitejs.dev" target="_blank">
@@ -9,6 +19,8 @@
     <a href="https://element-plus.org/" target="_blank">
       <img src="/element-plus-logo-small.svg" class="logo element-plus" alt="Element Plus logo" />
     </a>
+    <el-button @click="cancel">Cancel</el-button>
+    <el-button type="primary" @click="confirm">Confirm</el-button>
   </div>
 </template>
 

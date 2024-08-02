@@ -1,5 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import LinkDirective from '~/directive/link.directive'
+import router from '@/router/index'
 
 // import "~/styles/element/index.scss";
 
@@ -16,5 +18,7 @@ import "uno.css";
 import "element-plus/theme-chalk/src/message.scss";
 
 const app = createApp(App);
+app.directive('link', LinkDirective);
+app.use(router);
 // app.use(ElementPlus);
 app.mount("#app");

@@ -1,9 +1,10 @@
 import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
+import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import ElementPlus from 'unplugin-element-plus/vite'
 
 import Unocss from 'unocss/vite'
 import {
@@ -21,7 +22,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '~/': `${pathSrc}/`,
-      '@':'src'
+      '@':`${pathSrc}`
     },
   },
   css: {
@@ -32,6 +33,18 @@ export default defineConfig({
     },
   },
   plugins: [
+    ElementPlus(),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+      imports: ['vue', 'vue-router'],
+      eslintrc: {
+        enabled: false, // Default `false`
+        // provide path ending with `.mjs` or `.cjs` to generate the file with the respective format
+        filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+        globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+      },
+      dts:'src/components.d.ts',
+    }),
     vue(),
     Components({
       // allow auto load markdown components under `./src/components/`

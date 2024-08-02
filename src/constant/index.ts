@@ -1,0 +1,2 @@
+
+export const PROVIDE_DIALOG_VM = '__IDP_UX_DY_DIALOG_VM'

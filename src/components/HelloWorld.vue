@@ -1,19 +1,31 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { ElMessage } from "element-plus";
-
+import {dialogService} from '~/service/ui-dialog/index'
+import { CustomComponentInstance } from "~/service/ui-dialog/type";
 defineProps<{ msg: string }>();
 
 const count = ref(0);
 const input = ref("element-plus");
+const proxy = getCurrentInstance()
+const dialogVisible = ref(false)
 
 const curDate = ref("");
 
 const toast = () => {
   ElMessage.success("Hello");
 };
+const openDialog = async() =>{
+  const result1 = await dialogService({
+    targetVM: proxy,
+    title: 'Tips123',
+    // content: 'Tips message',
+    width: '300px',
+    asyncComponent: defineAsyncComponent( () => import('~/components/Logos.vue')),
+  })
 
-const value1 = ref(true);
+  console.log(result1)
+}
+
 </script>
 
 <template>
@@ -28,6 +40,8 @@ const value1 = ref(true);
   <!-- example components -->
   <div class="mb-4">
     <el-button size="large" @click="toast">El Message</el-button>
+    <el-button size="large" @click="openDialog">El Dialog Service</el-button>
+    <el-button size="large" @click="dialogVisible = true">El Dialog</el-button>
   </div>
 
   <div class="my-2 text-center flex flex-wrap justify-center items-center">
@@ -38,8 +52,22 @@ const value1 = ref(true);
     <el-button type="danger" @click="count++">count is: {{ count }}</el-button>
     <el-button type="info" @click="count++">count is: {{ count }}</el-button>
   </div>
-
-  <FrappeGantt />
+  <el-dialog
+    v-model="dialogVisible"
+    append-to-body
+    title="Tips"
+    width="500"
+  >
+    <span>This is a message</span>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogVisible = false">
+          Confirm
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
 
 </template>
 

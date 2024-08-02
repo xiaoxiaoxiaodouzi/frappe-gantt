@@ -198,7 +198,6 @@ import { findIndex, cloneDeep, includes, forEach, map, find} from 'lodash';
 import { Gantt } from './frappeGantt.js';
 // import AddWoDate from '@/components/FrappeGantt/AddWoDate'
 // import WorkorderBffService from '@/service/WorkorderBffService'
-import { getCurrentInstance, onUnmounted, ref, watch, nextTick, unref, onMounted, computed} from 'vue';
 // import useFormat from '@/composition/useFormat.js';
 import dayjs from 'dayjs';
 import screenfull from 'screenfull'
@@ -753,7 +752,7 @@ import ganttData from './dependences.js'
       getWOList()
     })
     onUnmounted(() => {
-      gantt.destroy()
+      gantt.value.destroy()
     })
 
 </script>
